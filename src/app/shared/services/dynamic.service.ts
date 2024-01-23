@@ -1,12 +1,12 @@
-import {Inject, Injectable} from '@angular/core';
-import {cloneDeep} from 'lodash';
-import {HttpClient} from "@angular/common/http";
-import {baseUrl} from "@core/services/base-url";
-import {BaseApi} from '@core/services/base-api.service';
-import {map, Observable, of} from "rxjs";
-import {AuthenticationData, DynamicData, Response, SearchData, SearchResponse, Value} from './hub.model';
-import {RequestType} from "@shared/services/hub.type";
-import {DynamicForm} from "@shared/custom-input-controls/dynamic/form/form.model";
+import { Inject, Injectable } from '@angular/core';
+import { cloneDeep } from 'lodash';
+import { HttpClient } from "@angular/common/http";
+import { baseUrl } from "@core/services/base-url";
+import { BaseApi } from '@core/services/base-api.service';
+import { map, Observable, of } from "rxjs";
+import { AuthenticationData, DynamicData, Response, SearchData, SearchResponse, Value } from './hub.model';
+import { RequestType } from "@shared/services/hub.type";
+import { DynamicForm } from "@shared/custom-input-controls/dynamic/form/form.model";
 
 
 @Injectable()
@@ -174,6 +174,7 @@ export class DynamicService extends BaseApi {
         });
       }
     }
+    console.log(convertData)
     return this.httpClient.post(this.newCreateUrl(), convertData);
   }
 

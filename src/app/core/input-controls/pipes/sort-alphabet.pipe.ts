@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {cloneDeep} from 'lodash';
+import { cloneDeep } from 'lodash';
 
 @Pipe({
   name: 'SortAlphabetPipe'
@@ -13,5 +13,4 @@ export class SortAlphabetPipe implements PipeTransform {
       return values;
     }
   }
-
 }

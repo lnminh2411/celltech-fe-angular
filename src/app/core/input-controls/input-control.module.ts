@@ -1,23 +1,42 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {AntModule} from "@core/modules/ant-design/ant.module";
-import {SortAlphabetPipe} from "src/app/core/input-controls/pipes";
-import {FormsModule} from "@angular/forms";
-import {SelectComponent} from "@core/input-controls/select-control";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AntModule } from "@core/modules/ant-design/ant.module";
+import { SortAlphabetPipe } from "src/app/core/input-controls/pipes";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SelectComponent } from "@core/input-controls/select-control";
+import { RichtextComponent } from './text-control/richtext/richtext.component';
+import { TextComponent } from './text-control/text/text.component';
+import { NumberComponent } from './text-control/number/number.component';
+import { DatetimeComponent } from './text-control/datetime/datetime.component';
+import { FileComponent } from './text-control/file/file.component';
+import { TreeSelectComponent } from './select-control/tree-select/tree-select.component';
 
 @NgModule({
   declarations: [
     SortAlphabetPipe,
-    SelectComponent
+    SelectComponent,
+    RichtextComponent,
+    TextComponent,
+    NumberComponent,
+    DatetimeComponent,
+    FileComponent,
+    TreeSelectComponent
   ],
   imports: [
     BrowserModule,
     AntModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     SortAlphabetPipe,
-    SelectComponent
+    SelectComponent,
+    TextComponent,
+    RichtextComponent,
+    NumberComponent,
+    DatetimeComponent,
+    FileComponent,
+    TreeSelectComponent
   ]
 })
 export class InputControlModule {

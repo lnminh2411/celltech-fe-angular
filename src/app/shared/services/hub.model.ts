@@ -1,4 +1,4 @@
-import {RequestType} from "@shared/services/hub.type";
+import { RequestType } from "@shared/services/hub.type";
 
 export interface DynamicData {
   id?: string;

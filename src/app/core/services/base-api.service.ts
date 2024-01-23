@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 export class BaseApi {
   protected baseUrl: string | undefined;
 
-  constructor(protected httpClient: HttpClient) {}
+  constructor(protected httpClient: HttpClient) { }
 
   protected setEndpoint(hostUrl: string, endpoint: string) {
     if (endpoint.startsWith('/')) {

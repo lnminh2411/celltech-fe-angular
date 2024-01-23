@@ -11,6 +11,7 @@ export const session = {
     try {
       return JSON.parse(sessionStorage.getItem(key) || '');
     } catch (e) {
+      console.log()
     }
   },
 

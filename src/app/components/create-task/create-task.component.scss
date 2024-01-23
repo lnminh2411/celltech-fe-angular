@@ -1,0 +1,28 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.action_bottom {
+    text-align: right;
+    justify-content: center;
+}
+:host ::ng-deep celltech-text input,
+:host ::ng-deep celltech-number input,
+:host ::ng-deep celltech-datetime nz-date-picker,
+:host ::ng-deep celltech-select nz-select nz-select-top-control ,
+:host ::ng-deep celltech-select nz-tree-select,
+:host ::ng-deep celltech-upload-file nz-upload,
+:host ::ng-deep celltech-rich-text textarea {
+  border-radius: 5px; /* Adjust the radius value as needed */
+  width: 100%;
+  color: inherit;
+  font-size: inherit;
+  background-color: inherit;
+}

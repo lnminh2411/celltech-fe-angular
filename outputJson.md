@@ -1,0 +1,27 @@
+- request: giá trị của request
+- actionId: giá trị ID của button
+- tableId: giá trị ID của bảng lưu dữ liệu
+- sessionId: giá trị ID của phiên
+- formId: giá trị ID của form
+- data: [] 21
+  - {name: ESTIMATED_TIME , value:}: giá trị của thời gian dự kiến
+  - {name: ATTACHMENT , value:}: giá trị của file đính kèm
+  - {name: TASK_CODE , value:}: giá trị của mã task
+  - {name: TASK_STATUS , value:}: giá trị ID của trạng thái
+  - {name: WEIGHTED_SCORE , value:}: giá trị của hệ số
+  - {name: PROJECT , value:}: giá trị ID của dự án
+  - {name: DESIRED_RESUIT , value:}: giá trị của kết quả
+  - {name: DESCRIPTION , value:}: giá trị của mô tả
+  - {name: PERSON_IN_CHARGE , value:}: giá trị ID của người thực hiện
+  - {name: START_DATE , value:}: giá trị của ngày bắt đầu
+  - {name: NAME , value:}: giá trị của tiêu đề
+  - {name: KPI , value:}: giá trị ID của KPI
+  - {name: DUE_DATE , value:}: giá trị của ngày deadline
+  - {name: PARENT , value:}: giá trị id của công việc cấp cha
+  - {name: ACTUAL_TIME , value:}: giá trị của thời gian thực tế
+  - {name: TASK_STATUS_TEXT , value:}: giá trị bằng chữ của trạng thái
+  - {name: PROJECT_TEXT , value:}: giá trị bằng chữ của dự án
+  - {name: PERSON_IN_CHARGE_TEXT , value:}: giá trị bằng chữ của người thực hiện
+  - {name: KPI_TEXT , value:}: giá trị bằng chữ của KPI
+  - {name: PARENT_TEXT , value:}: giá trị bằng chữ của công việc cấp cha
+  - {name: ID , value:}: giá trị ID của response data

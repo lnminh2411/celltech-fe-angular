@@ -1,0 +1,10 @@
+<ng-container [ngSwitch]="elementType">
+    <celltech-datetime *ngSwitchCase="'DATE_TIME'" [formControlName]="name"></celltech-datetime>
+    <celltech-number *ngSwitchCase="'NUMBER'" [formControlName]="name"></celltech-number>
+    <celltech-rich-text [id]="id" *ngSwitchCase="'TEXT_AREA'" [formControlName]="name"></celltech-rich-text>
+    <celltech-select *ngSwitchCase="'DROPDOWN'" [formControlName]="name"></celltech-select>
+    <celltech-text *ngSwitchCase="'TEXT'" [formControlName]="name"></celltech-text>
+    <celltech-tree-select *ngSwitchCase="'TREE_DROPDOWN'" [formControlName]="name"></celltech-tree-select>
+    <celltech-upload-file *ngSwitchCase="'FILE'" [formControlName]="name"></celltech-upload-file>
+    <div *ngSwitchDefault>Unknown element type: {{ elementType }}</div>
+</ng-container>

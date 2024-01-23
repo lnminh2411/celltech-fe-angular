@@ -1,0 +1,10 @@
+<nz-upload  [nzMultiple]="true" nzAction="https://run.mocky.io/v3/ebb8300f-841b-4f9f-b909-5c3fb38e7963"
+    (nzChange)="onHandleChangeValue($event)"  [nzFileList]="fileList">
+    <div class="upload">
+        <button nz-button nzType="default" type="button" style="width: 100%;">
+            <span nz-icon nzType="upload"></span>
+            Click to upload File
+        </button>  
+    </div>
+ 
+</nz-upload>

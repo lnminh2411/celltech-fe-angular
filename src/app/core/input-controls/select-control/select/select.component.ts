@@ -1,6 +1,6 @@
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {isFunction} from 'lodash';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { isFunction } from 'lodash';
 
 @Component({
   selector: 'celltech-select',
@@ -16,22 +16,22 @@ import {isFunction} from 'lodash';
 })
 
 export class SelectComponent implements ControlValueAccessor {
-  @Input()
-  displayField!: string;
+  @Input() displayField!: string; // key chua data can hien
   @Input() selectedValue: any;
   @Input() defaultValue!: string;
   @Input() showAllText!: string;
   @Input() showAllTextDisabled!: boolean;
-  @Input() valueField!: string;
+  @Input() valueField!: string; // key chua id cua data
   @Input() isDisabled!: any;
   @Input() values!: any[];
   @Input() mode!: string;
   @Output() selected = new EventEmitter();
+
+  //selectedValue: string = '';
+
   value: any;
   public touched!: () => void;
-
-  public height = '250px';
-  private onChange = (value: any) => {};
+  private onChange = (value: any) => { };
 
   writeValue(value: string): void {
     this.value = value;
@@ -46,12 +46,14 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 
   onHandleChangeValue(value: any) {
-    this.value = value;
+    this.writeValue(value)
     if (this.selectedValue) {
       this.selectedValue = value;
+      console.log("sdkjfhskdjfhdkjf")
     }
     if (isFunction(this.onChange)) {
       this.onChange(this.value);
