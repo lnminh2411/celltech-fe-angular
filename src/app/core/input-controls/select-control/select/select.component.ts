@@ -26,9 +26,6 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() values!: any[];
   @Input() mode!: string;
   @Output() selected = new EventEmitter();
-
-  //selectedValue: string = '';
-
   value: any;
   public touched!: () => void;
   private onChange = (value: any) => { };
@@ -53,11 +50,11 @@ export class SelectComponent implements ControlValueAccessor {
     this.writeValue(value)
     if (this.selectedValue) {
       this.selectedValue = value;
-      console.log("sdkjfhskdjfhdkjf")
+
     }
     if (isFunction(this.onChange)) {
       this.onChange(this.value);
     }
     this.selected.emit(this.value);
-  }
+  } 
 }

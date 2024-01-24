@@ -1,0 +1,3 @@
+"useNewValue": true: cho phep them moi du lieu,
+"multipleValue": true : cho phep co nhieu du lieu,
+"logChanged": true,

@@ -16,17 +16,18 @@
                     <nz-form-control nzErrorTip="Please input">
                         <ng-container class="input" [ngSwitch]="getElementType(column.componentText)">
                             <celltech-datetime *ngSwitchCase="'DATE_TIME'" formControlName="{{column.componentText}}" 
+                                                [format]="getDateTimeFormat(column.componentText)"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-datetime>
                             <celltech-number *ngSwitchCase="'NUMBER'" formControlName="{{column.componentText}}"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-number>
                             <celltech-rich-text *ngSwitchCase="'TEXT_AREA'" formControlName="{{column.componentText}}"
@@ -34,38 +35,40 @@
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-rich-text>
                             <celltech-select *ngSwitchCase="'DROPDOWN'" formControlName="{{column.componentText}}" 
                                                 [values]="getValuesForComponent(column.componentText)" 
                                                 [displayField]="'value'" 
                                                 [valueField]="'id'"
+                                                [defaultValue]="getDefaultValue(column.componentText)"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-select>
                             <celltech-text *ngSwitchCase="'TEXT'" formControlName="{{column.componentText}}"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-text>
                             <celltech-tree-select *ngSwitchCase="'TREE_DROPDOWN'" formControlName="{{column.componentText}}"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-tree-select>
                             <celltech-upload-file *ngSwitchCase="'FILE'" formControlName="{{column.componentText}}"
+                                                [isMultipleFile]="isMultipleFile(column.componentText)"
                                                 [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
-                                                    'backgroundd-color': getFieldStyle(column.componentText).backgroundColor
+                                                    'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-upload-file>
                             <div *ngSwitchDefault>Unknown element type: {{ getElementType(column.componentText) }}</div>

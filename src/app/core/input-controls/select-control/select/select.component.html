@@ -1,5 +1,6 @@
 <nz-select nzShowSearch nzAllowClear class="w-100" 
-          [nzDisabled]="isDisabled" [nzPlaceHolder]="'Chọn giá trị ...'"
+          [nzDisabled]="isDisabled" [nzPlaceHolder]="defaultValue"
+          (nzBlur)="touched"
           (ngModelChange)="onHandleChangeValue($event)" [(ngModel)]="selectedValue ? selectedValue : value">
   <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchCase="'GROUP'">
@@ -10,7 +11,7 @@
     </ng-container>
     <!--nzValue: Value khi select, nzLabel: Value khi hien thi-->
     <ng-container *ngSwitchDefault>
-      <nz-option *ngFor="let value of values" [nzLabel]="value[displayField]"
+      <nz-option *ngFor="let value of values | SortAlphabetPipe : displayField" [nzLabel]="value[displayField]"
         [nzValue]="value[valueField]"></nz-option>
     </ng-container>
   </ng-container>

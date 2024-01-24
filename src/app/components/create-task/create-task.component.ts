@@ -182,9 +182,24 @@ export class CreateTaskComponent {
     return settingField?.settings?.form?.required ?? false;
   }
 
-  getElementType(field: string): FormElementType | undefined {
+  isClearAfterSubmit(field: string): boolean {
+    const settingField = this.getSettingField(field);
+    return settingField?.settings?.form?.clearAfterSubmit ?? false;
+  }
+
+  isMultipleFile(field: string): boolean {
+    const settingField = this.getSettingField(field);
+    return settingField?.settings?.form?.multipleValue ?? false;
+  }
+
+  getElementType(field: string): FormElementType {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.formElementType;
+  }
+
+  getDefaultValue(field: string): string {
+    const settingField = this.getSettingField(field);
+    return (settingField?.settings?.form?.useDefaultValue) ? settingField?.settings?.form?.defaultValue : '';
   }
 
   getFieldStyle(field: string): {
@@ -208,6 +223,10 @@ export class CreateTaskComponent {
     const settingActionArray = Object.values<any>(this.actionSetting);
     const settingAction = settingActionArray.find((obj) => obj.name === field);
     return settingAction?.id || '';
+  }
+  getDateTimeFormat(field: string): string {
+    const settingField = this.getSettingField(field);
+    return settingField?.settings?.form?.format ?? {};
   }
 
   onAction(action: any) {
@@ -251,9 +270,9 @@ export class CreateTaskComponent {
     console.log(myDynamicForm)
     console.log(this.createTaskService.create(myDynamicForm, 'CREATE', ''));
     Object.keys(this.form.controls).forEach(key => {
-      this.form.controls[key].reset('');
+      if (this.isClearAfterSubmit(key))
+        this.form.controls[key].reset('');
     });
-    console.log(this.form.value)
   }
   onSubmit() {
     // Handle form submission
@@ -273,11 +292,11 @@ export class CreateTaskComponent {
     //debugger;//eslint-disable-line
     const dataArray = this.getValuesForComponent(name);
     if (dataArray.length === 0) {
-      return null;
+      return '';
     }
     const data = dataArray.find((obj) => obj.id === id);
     if (!data) {
-      return null;
+      return '';
     }
     const value = data.value;
     return value;

@@ -1,7 +1,8 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'celltech-upload-file',
@@ -16,13 +17,13 @@ import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
   ]
 })
 export class FileComponent implements ControlValueAccessor {
-  constructor(private msg: NzMessageService) { }
+  constructor(private msg: NzMessageService, private modal: NzModalService) { }
+  @Input() isMultipleFile: any;
+
   fileList: any[] = [];
 
-  // Optional: Function to call when the control is touched
   onTouched = () => { };
 
-  // Optional: Function to call when the value changes
   onChange = (files: any[]) => { };
   disable = false;
   writeValue(files: any[]): void {
@@ -30,12 +31,10 @@ export class FileComponent implements ControlValueAccessor {
     this.onChange(this.fileList);
   }
 
-  // Register a callback function that should be called when the control's value changes in the UI
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  // Register a callback function that should be called when the control is blurred
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
@@ -44,12 +43,41 @@ export class FileComponent implements ControlValueAccessor {
   }
 
   onHandleChangeValue(info: NzUploadChangeParam): void {
+
     if (info.file.status === 'done') {
-      this.msg.success(`${info.file.name} file uploaded successfully`);
+      const uploadedFile = info.fileList[info.fileList.length - 1];
+
+      const existingFile = this.fileList.find(file => file.name === uploadedFile.name);
+
+      if (existingFile) {
+        uploadedFile.name = this.addSuffixToFileName(existingFile.name);
+      }
+      this.msg.success(`${uploadedFile.name} file uploaded successfully`);
       this.writeValue(info.fileList);
       this.onChange(info.fileList);
     } else if (info.file.status === 'error') {
       this.msg.error(`${info.file.name} file upload failed.`);
     }
   }
+
+  private addSuffixToFileName(existingFileName: string): string {
+    const fileExtension = existingFileName.split('.').pop();
+    const baseFileName = existingFileName.replace(`.${fileExtension}`, '');
+    let counter = 1;
+    let suffixedFileName = `${baseFileName} (${counter}).${fileExtension}`;
+
+    while (this.fileList.some(file => file.name === suffixedFileName)) {
+      counter++;
+      suffixedFileName = `${baseFileName} (${counter}).${fileExtension}`;
+    }
+
+    return suffixedFileName;
+  }
+  // showConfirm(): void {
+  //   this.modal.confirm({
+  //     nzTitle: '<p>This file already exist</p>',
+  //     nzContent: '<b>Do you want to add</b>',
+  //     nzOnOk: () => uploadedFile.name = this.addSuffixToFileName(existingFile.name)
+  //   });
+  // }
 }
