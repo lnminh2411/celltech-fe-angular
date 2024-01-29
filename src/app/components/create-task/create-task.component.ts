@@ -123,6 +123,27 @@ export class CreateTaskComponent {
       "value": "Luxurious Concrete Table"
     }
   ]
+  tree_data: any[] = [
+    {
+      title: 'parent 1',
+      key: '100',
+      children: [
+        {
+          title: 'parent 1-0',
+          key: '1001',
+          children: [
+            { title: 'leaf 1-0-0', key: '10010', isLeaf: true },
+            { title: 'leaf 1-0-1', key: '10011', isLeaf: true }
+          ]
+        },
+        {
+          title: 'parent 1-1',
+          key: '1002',
+          children: [{ title: 'leaf 1-1-0', key: '10020', isLeaf: true }]
+        }
+      ]
+    }
+  ];
   form!: FormGroup;
   createTaskForm!: any;
   fieldSetting: any;
@@ -192,6 +213,11 @@ export class CreateTaskComponent {
     return settingField?.settings?.form?.multipleValue ?? false;
   }
 
+  isSubmitValue(field: string): boolean {
+    const settingField = this.getSettingField(field);
+    return settingField?.settings?.form?.submitValue ?? false;
+  }
+
   getElementType(field: string): FormElementType {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.formElementType;
@@ -199,7 +225,8 @@ export class CreateTaskComponent {
 
   getDefaultValue(field: string): string {
     const settingField = this.getSettingField(field);
-    return (settingField?.settings?.form?.useDefaultValue) ? settingField?.settings?.form?.defaultValue : '';
+    const defaultValue = (settingField?.settings?.form?.useDefaultValue) ? settingField?.settings?.form?.defaultValue : '';
+    return defaultValue;
   }
 
   getFieldStyle(field: string): {
@@ -224,7 +251,7 @@ export class CreateTaskComponent {
     const settingAction = settingActionArray.find((obj) => obj.name === field);
     return settingAction?.id || '';
   }
-  getDateTimeFormat(field: string): string {
+  getFormat(field: string): string {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.format ?? {};
   }
@@ -238,45 +265,43 @@ export class CreateTaskComponent {
   }
   closeButton() { }
   saveButton() {
-    // if (this.form.valid) {
+    if (this.form.valid) {
+      const dynamicFormData: KeyValuePair<any> = {};
 
-    //   console.log("asdajsdh")
-    // } else {
-    //   Object.values(this.form.controls).forEach(control => {
-    //     if (control.invalid) {
-    //       control.markAsDirty();
-    //       control.updateValueAndValidity({ onlySelf: true });
-    //     }
-    //   });
-    // }
-    const dynamicFormData: KeyValuePair<any> = {};
+      Object.keys(this.form.controls).forEach(key => {
+        dynamicFormData[key] = this.form.get(key)!.value;
+      });
+      Object.keys(dynamicFormData).forEach(key => {
+        if (this.getElementType(key) === "DROPDOWN") {
+          const textValue = this.getTextValue(key, dynamicFormData[key]);
+          dynamicFormData[key + "_TEXT"] = textValue;
+        } else if (this.getElementType(key) === "TREE_DROPDOWN") {
+          const textValue = this.getTitleByKey(dynamicFormData[key], this.getValuesForComponent(key))
+          dynamicFormData[key + "_TEXT"] = textValue;
+        }
+      })
+      const myDynamicForm: DynamicForm = {
+        tableId: this.createTaskForm.tableId,
+        tableName: this.createTaskForm.tableName,
+        data: dynamicFormData,
+        formId: this.createTaskForm.id,
+        actionId: this.getActionId('Save'),
+      };
+      console.log(this.createTaskService.create(myDynamicForm, 'CREATE', ''));
+      Object.keys(this.form.controls).forEach(key => {
+        if (this.isClearAfterSubmit(key))
+          this.form.controls[key].reset('');
+      });
+    } else {
+      Object.values(this.form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
 
-    Object.keys(this.form.controls).forEach(key => {
-      dynamicFormData[key] = this.form.get(key)!.value;
-    });
-    Object.keys(dynamicFormData).forEach(key => {
-      if (this.getElementType(key) === "DROPDOWN" || this.getElementType(key) === "TREE_DROPDOWN") {
-        const textValue = this.getTextValue(key, dynamicFormData[key]);
-        dynamicFormData[key + "_TEXT"] = textValue;
-      }
-    })
-    const myDynamicForm: DynamicForm = {
-      tableId: this.createTaskForm.tableId,
-      tableName: this.createTaskForm.tableName,
-      data: dynamicFormData,
-      formId: this.createTaskForm.id,
-      actionId: this.getActionId('Save'),
-    };
-    console.log(myDynamicForm)
-    console.log(this.createTaskService.create(myDynamicForm, 'CREATE', ''));
-    Object.keys(this.form.controls).forEach(key => {
-      if (this.isClearAfterSubmit(key))
-        this.form.controls[key].reset('');
-    });
-  }
-  onSubmit() {
-    // Handle form submission
-  }
   getValuesForComponent(componentText: string) {
     if (componentText === 'PERSON_IN_CHARGE') {
       return this.person_in_charge;
@@ -284,12 +309,14 @@ export class CreateTaskComponent {
       return this.project;
     } else if (componentText === 'TASK_STATUS') {
       return this.task_status;
+    } else if (componentText === 'KPI') {
+      return this.tree_data;
     } else {
       return [];
     }
   }
+
   getTextValue(name: string, id: string) {
-    //debugger;//eslint-disable-line
     const dataArray = this.getValuesForComponent(name);
     if (dataArray.length === 0) {
       return '';
@@ -302,4 +329,26 @@ export class CreateTaskComponent {
     return value;
   }
 
+  getTitleByKey(key: string, nodes: any[]): string | null {
+    for (const node of nodes) {
+      if (node.key === key) {
+        return node.title;
+      }
+      if (node.children) {
+        const title = this.getTitleByKey(key, node.children);
+        if (title !== null) {
+          return title;
+        }
+      }
+    }
+    return null;
+  }
+
+  onSubmit() {
+    // Handle form submission
+  }
+  getItem(newItem: any) {
+    //this.person_in_charge.push({ id: (this.createTaskService.generateGUID()), value: newItem });
+    //debugger;//eslint-disable-line
+  }
 }

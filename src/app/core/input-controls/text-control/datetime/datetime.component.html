@@ -1,1 +1,2 @@
-<nz-date-picker [(ngModel)]="date" (ngModelChange)="onHandleChangeValue($event)" [nzFormat]="format"></nz-date-picker>
+<nz-date-picker [(ngModel)]="date" (ngModelChange)="onHandleChangeValue($event)" [nzFormat]="format" [nzPlaceHolder]="defaultValue ? defaultValue : 'Select date'">
+</nz-date-picker>

@@ -15,7 +15,8 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 export class NumberComponent implements ControlValueAccessor {
   constructor() { }
-  @Input() @HostBinding('attr.ngStyle') ngStyle: any;
+  @Input() format: any;
+  @Input() defaultValue: any;
   value!: number;
   onChange: (value: number) => void = () => { };
   onTouch: () => void = () => { };
