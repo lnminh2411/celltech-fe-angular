@@ -1,5 +1,7 @@
 <nz-tree-select [nzNodes]="nodes" nzShowSearch 
-    nzPlaceHolder="Chọn giá trị ..." 
-    [(ngModel)]="value" (ngModelChange)="onChange($event)">
+    [nzPlaceHolder]="defaultValue ? defaultValue : 'Chọn giá trị ...'"
+    [(ngModel)]="value" (ngModelChange)="onHandleChangeValue($event)"
+    [nzNodes]="nodes"
+    nzShowSearch>
 
 </nz-tree-select>

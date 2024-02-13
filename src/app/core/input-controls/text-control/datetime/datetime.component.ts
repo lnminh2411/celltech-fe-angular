@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 })
 export class DatetimeComponent implements ControlValueAccessor {
   @Input() format: any;
+  @Input() defaultValue: any;
   date: Date = new Date();
   //date = null;
   onChange: (value: any) => void = () => { };

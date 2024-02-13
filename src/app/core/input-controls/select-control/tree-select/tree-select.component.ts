@@ -15,7 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class TreeSelectComponent implements ControlValueAccessor {
   @Input() nodes: any[] = [];
-  value: string[] = [];
+  @Input() defaultValue: any;
+  value?: string;
   onChange: (value: string) => void = () => { };
   onTouch: () => void = () => { };
   disable: boolean = false;
@@ -31,7 +32,9 @@ export class TreeSelectComponent implements ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     this.disable = isDisabled;
   }
-  onHandleChangeValue(result: any): void {
-    
+  onHandleChangeValue(value: any): void {
+    //debugger;//eslint-disable-line
+    this.writeValue(value)
+    this.onChange(value)
   }
 }

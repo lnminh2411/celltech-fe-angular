@@ -15,6 +15,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 export class TextComponent implements ControlValueAccessor {
   constructor() { }
+  @Input() defaultValue: any;
   value!: string;
   onChange: (value: string) => void = () => { };
   onTouch: () => void = () => { };

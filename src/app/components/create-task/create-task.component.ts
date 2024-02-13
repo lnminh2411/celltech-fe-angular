@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -123,13 +123,36 @@ export class CreateTaskComponent {
       "value": "Luxurious Concrete Table"
     }
   ]
+  tree_data: any[] = [
+    {
+      title: 'parent 1',
+      key: '100',
+      children: [
+        {
+          title: 'parent 1-0',
+          key: '1001',
+          children: [
+            { title: 'leaf 1-0-0', key: '10010', isLeaf: true },
+            { title: 'leaf 1-0-1', key: '10011', isLeaf: true }
+          ]
+        },
+        {
+          title: 'parent 1-1',
+          key: '1002',
+          children: [{ title: 'leaf 1-1-0', key: '10020', isLeaf: true }]
+        }
+      ]
+    }
+  ]
   form!: FormGroup;
   createTaskForm!: any;
   fieldSetting: any;
   actionSetting: any;
+  firstErrorElement!: ElementRef;
   constructor(
     private createTaskService: CreateTaskService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private elementRef: ElementRef
   ) {
 
   }
@@ -162,7 +185,7 @@ export class CreateTaskComponent {
       });
     });
   }
-  private getSettingField(componentText: string) {
+  getSettingField(componentText: string) {
     const settingFieldArray = Object.values<any>(this.fieldSetting);
     return settingFieldArray.find((obj) => obj.componentText === componentText);
   }
@@ -224,7 +247,7 @@ export class CreateTaskComponent {
     const settingAction = settingActionArray.find((obj) => obj.name === field);
     return settingAction?.id || '';
   }
-  getDateTimeFormat(field: string): string {
+  getFormat(field: string): string {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.format ?? {};
   }
@@ -238,25 +261,17 @@ export class CreateTaskComponent {
   }
   closeButton() { }
   saveButton() {
-    // if (this.form.valid) {
-
-    //   console.log("asdajsdh")
-    // } else {
-    //   Object.values(this.form.controls).forEach(control => {
-    //     if (control.invalid) {
-    //       control.markAsDirty();
-    //       control.updateValueAndValidity({ onlySelf: true });
-    //     }
-    //   });
-    // }
     const dynamicFormData: KeyValuePair<any> = {};
 
     Object.keys(this.form.controls).forEach(key => {
       dynamicFormData[key] = this.form.get(key)!.value;
     });
     Object.keys(dynamicFormData).forEach(key => {
-      if (this.getElementType(key) === "DROPDOWN" || this.getElementType(key) === "TREE_DROPDOWN") {
+      if (this.getElementType(key) === "DROPDOWN") {
         const textValue = this.getTextValue(key, dynamicFormData[key]);
+        dynamicFormData[key + "_TEXT"] = textValue;
+      } else if (this.getElementType(key) === "TREE_DROPDOWN") {
+        const textValue = this.getTitleByKey(dynamicFormData[key], this.getValuesForComponent(key))
         dynamicFormData[key + "_TEXT"] = textValue;
       }
     })
@@ -267,12 +282,24 @@ export class CreateTaskComponent {
       formId: this.createTaskForm.id,
       actionId: this.getActionId('Save'),
     };
-    console.log(myDynamicForm)
-    console.log(this.createTaskService.create(myDynamicForm, 'CREATE', ''));
-    Object.keys(this.form.controls).forEach(key => {
-      if (this.isClearAfterSubmit(key))
-        this.form.controls[key].reset('');
-    });
+    if (this.form.valid) {
+      this.createTaskService.create(myDynamicForm, 'CREATE', '');
+      Object.keys(this.form.controls).forEach(key => {
+        if (this.isClearAfterSubmit(key))
+          this.form.controls[key].reset('');
+      });
+    } else {
+      Object.values(this.form.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+          this.scrollIfFormHasErrors(this.form).then(() => {
+            // Run any additional functionality if you need to. 
+          });
+        }
+      });
+    }
+
   }
   onSubmit() {
     // Handle form submission
@@ -284,6 +311,8 @@ export class CreateTaskComponent {
       return this.project;
     } else if (componentText === 'TASK_STATUS') {
       return this.task_status;
+    } else if (componentText === 'KPI') {
+      return this.tree_data;
     } else {
       return [];
     }
@@ -301,5 +330,36 @@ export class CreateTaskComponent {
     const value = data.value;
     return value;
   }
+  getTitleByKey(key: string, nodes: any[]): string | null {
+    for (const node of nodes) {
+      if (node.key === key) {
+        return node.title;
+      }
+      if (node.children) {
+        const title = this.getTitleByKey(key, node.children);
+        if (title !== null) {
+          return title;
+        }
+      }
+    }
+    return null;
+  }
+  scrollTo(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
+  scrollToError(): void {
+    const firstElementWithError = document.querySelector('.ng-invalid');
+    this.scrollTo(firstElementWithError!);
+  }
+
+  async scrollIfFormHasErrors(form: FormGroup): Promise<any> {
+    await form.invalid;
+    this.scrollToError();
+  }
+  getItem(newItem: any) {
+
+  }
 }
