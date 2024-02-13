@@ -16,6 +16,7 @@ import { isFunction } from 'lodash';
 })
 
 export class SelectComponent implements ControlValueAccessor {
+  originalValue: any;
   @Input() displayField!: string; // key chua data can hien
   @Input() selectedValue: any;
   @Input() defaultValue!: string;
@@ -25,13 +26,16 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() isDisabled!: any;
   @Input() values!: any[];
   @Input() mode!: string;
+
   @Output() selected = new EventEmitter();
   value: any;
   public touched!: () => void;
   private onChange = (value: any) => { };
-
+  setOriginalValue(value: any) {
+    this.originalValue = value;
+  }
   writeValue(value: string): void {
-    this.value = value;
+    this.selectedValue = value;
   }
 
   registerOnChange(fn: any): void {
@@ -47,14 +51,24 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   onHandleChangeValue(value: any) {
-    this.writeValue(value)
+    this.value = value;
+    this.writeValue(this.value);
     if (this.selectedValue) {
-      this.selectedValue = value;
-
+      this.selectedValue = this.value;
     }
     if (isFunction(this.onChange)) {
       this.onChange(this.value);
     }
+    //debugger;//eslint-disable-line
     this.selected.emit(this.value);
-  } 
+  }
+  onInput(event: any) {
+
+    //this.values.push({ id: "", value: event.target.value });
+    //debugger;//eslint-disable-line
+  }
+  trackByValue(index: number, value: any): string {
+    //debugger;//eslint-disable-line
+    return value[this.displayField]; // Assuming 'valueField' is a unique identifier for each value
+  }
 }

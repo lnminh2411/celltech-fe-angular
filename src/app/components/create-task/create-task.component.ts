@@ -215,6 +215,11 @@ export class CreateTaskComponent {
     return settingField?.settings?.form?.multipleValue ?? false;
   }
 
+  isSubmitValue(field: string): boolean {
+    const settingField = this.getSettingField(field);
+    return settingField?.settings?.form?.submitValue ?? false;
+  }
+
   getElementType(field: string): FormElementType {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.formElementType;
@@ -222,7 +227,8 @@ export class CreateTaskComponent {
 
   getDefaultValue(field: string): string {
     const settingField = this.getSettingField(field);
-    return (settingField?.settings?.form?.useDefaultValue) ? settingField?.settings?.form?.defaultValue : '';
+    const defaultValue = (settingField?.settings?.form?.useDefaultValue) ? settingField?.settings?.form?.defaultValue : '';
+    return defaultValue;
   }
 
   getFieldStyle(field: string): {
@@ -247,6 +253,7 @@ export class CreateTaskComponent {
     const settingAction = settingActionArray.find((obj) => obj.name === field);
     return settingAction?.id || '';
   }
+  getFormat(field: string): string {
   getFormat(field: string): string {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.format ?? {};
@@ -313,12 +320,14 @@ export class CreateTaskComponent {
       return this.task_status;
     } else if (componentText === 'KPI') {
       return this.tree_data;
+    } else if (componentText === 'KPI') {
+      return this.tree_data;
     } else {
       return [];
     }
   }
+
   getTextValue(name: string, id: string) {
-    //debugger;//eslint-disable-line
     const dataArray = this.getValuesForComponent(name);
     if (dataArray.length === 0) {
       return '';
