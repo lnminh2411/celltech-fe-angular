@@ -253,7 +253,7 @@ export class CreateTaskComponent {
     const settingAction = settingActionArray.find((obj) => obj.name === field);
     return settingAction?.id || '';
   }
-  getFormat(field: string): string {
+
   getFormat(field: string): string {
     const settingField = this.getSettingField(field);
     return settingField?.settings?.form?.format ?? {};
@@ -318,8 +318,6 @@ export class CreateTaskComponent {
       return this.project;
     } else if (componentText === 'TASK_STATUS') {
       return this.task_status;
-    } else if (componentText === 'KPI') {
-      return this.tree_data;
     } else if (componentText === 'KPI') {
       return this.tree_data;
     } else {
