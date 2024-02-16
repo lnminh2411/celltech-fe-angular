@@ -1,3 +1,8 @@
+Route: /dynamicTable : Bai 5 (Dynamic view table)
+Route: /dropdown: Bai 3 (Reference)
+
+
+
 # CelltechFeAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
