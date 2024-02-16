@@ -58,7 +58,8 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzBreadCrumbModule } from "ng-zorro-antd/breadcrumb";
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { DownloadOutline } from '@ant-design/icons-angular/icons'
+import { DownloadOutline } from '@ant-design/icons-angular/icons';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const icons = [DownloadOutline];
 @NgModule({
@@ -123,6 +124,7 @@ const icons = [DownloadOutline];
     NzBreadCrumbModule,
     NzUploadModule,
     NzButtonModule,
+    NzDividerModule,
   ]
 })
 export class AntModule {

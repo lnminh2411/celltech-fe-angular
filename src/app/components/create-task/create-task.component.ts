@@ -1,13 +1,12 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  FormControl,
-  AbstractControl,
+
   Validators,
 } from '@angular/forms';
 import { CreateTaskService } from '@components/services/create-task.service';
-import { FormElementType } from '@components/services/form-element.type';
+import { FormElementType } from '@components/model/form-element.type';
 import { KeyValuePair } from '@core/core.model';
 import { DynamicForm } from '@shared/custom-input-controls/dynamic/form/form.model';
 
@@ -17,6 +16,7 @@ import { DynamicForm } from '@shared/custom-input-controls/dynamic/form/form.mod
   styleUrls: ['./create-task.component.scss'],
 })
 export class CreateTaskComponent {
+  private dataUrl = '../../../assets/dynamicForm.json';
   person_in_charge: any[] = [
     {
       "id": "fc46d4e7-b867-47e0-9876-7ac44c814abe",
@@ -148,17 +148,15 @@ export class CreateTaskComponent {
   createTaskForm!: any;
   fieldSetting: any;
   actionSetting: any;
-  firstErrorElement!: ElementRef;
   constructor(
     private createTaskService: CreateTaskService,
     private formBuilder: FormBuilder,
-    private elementRef: ElementRef
   ) {
 
   }
 
   ngOnInit(): void {
-    this.createTaskService.getData().subscribe((response) => {
+    this.createTaskService.getDataFromJson(this.dataUrl).subscribe((response) => {
       this.createTaskForm = response.data.settingForm;
       this.fieldSetting = response.data.settingFieldComponents;
       this.actionSetting = response.data.settingActionComponents;

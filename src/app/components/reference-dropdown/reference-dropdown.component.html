@@ -1,0 +1,14 @@
+ <form [formGroup]="myForm">
+      <select formControlName="province" (change)="onProvinceChange($event)">
+        <option value="" disabled selected>Select Province</option>
+        <option *ngFor="let province of provinces | SortAlphabetPipe : displayField" [value]="province.code">{{ province.name }}</option>
+      </select>
+      <select formControlName="district" (change)="onDistrictChange($event)">
+        <option value="" disabled selected>Select District</option>
+        <option *ngFor="let district of filteredDistricts | SortAlphabetPipe : displayField" [value]="district.code">{{ district.name }}</option>
+      </select>
+      <select formControlName="ward">
+        <option value="" disabled selected>Select Ward</option>
+        <option *ngFor="let ward of filteredWards | SortAlphabetPipe : displayField" [value]="ward.code">{{ ward.name }}</option>
+      </select>
+</form>

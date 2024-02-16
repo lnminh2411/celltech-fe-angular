@@ -11,6 +11,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.component';
+import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
+import { ReferenceDropdownComponent } from './components/reference-dropdown/reference-dropdown.component';
 
 @NgModule({
 
@@ -18,6 +20,8 @@ import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.
     AppComponent,
     CreateTaskComponent,
     DynamicInputComponent,
+    DynamicTableComponent,
+    ReferenceDropdownComponent,
   ],
   imports: [
     AntModule,

@@ -1,0 +1,24 @@
+ <table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows">
+      <td>{{ row.id }}</td>
+      <td><input type="text" [(ngModel)]="row.name" [disabled]="!row.isEditing"></td>
+      <td><input type="number" [(ngModel)]="row.age" [disabled]="!row.isEditing"></td>
+      <td><input type="email" [(ngModel)]="row.email" [disabled]="!row.isEditing"></td>
+      <td>
+        <button *ngIf="row.isEditing" (click)="saveRow(row)">Save</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="addRow()">Add Row</button>

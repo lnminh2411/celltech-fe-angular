@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormElementType } from '@components/services/form-element.type';
+import { FormElementType } from '@components/model/form-element.type';
 import { FormControl } from '@angular/forms';
 
 @Component({

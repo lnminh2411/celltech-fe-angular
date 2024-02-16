@@ -9,12 +9,8 @@ import { DynamicData, Value } from '@shared/services/hub.model';
   providedIn: 'root',
 })
 export class CreateTaskService {
-  private dataUrl = '../../../assets/dynamicForm.json';
   private sessionId: string | undefined;
   constructor(private httpClient: HttpClient) { }
-  public getData(): Observable<any> {
-    return this.httpClient.get<any>(this.dataUrl);
-  }
 
   public create(
     data: DynamicForm,
@@ -63,5 +59,7 @@ export class CreateTaskService {
       return v.toString(16);
     });
   }
-
+  public getDataFromJson(jsonUrl: string): Observable<any> {
+    return this.httpClient.get<any>(jsonUrl);
+  }
 }
