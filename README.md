@@ -1,5 +1,6 @@
-Route: /dynamicTable : Bai 5 (Dynamic view table)
-Route: /dropdown: Bai 3 (Reference)
+#Route: /dynamicTable : Bai 5 (Dynamic view table)
+
+#Route: /dropdown: Bai 3 (Reference)
 
 
 
