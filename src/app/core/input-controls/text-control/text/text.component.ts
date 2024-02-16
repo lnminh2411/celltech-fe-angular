@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 @Component({
   selector: 'celltech-text',
@@ -14,7 +14,6 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ]
 })
 export class TextComponent implements ControlValueAccessor {
-  constructor() { }
   @Input() defaultValue: any;
   value!: string;
   onChange: (value: string) => void = () => { };

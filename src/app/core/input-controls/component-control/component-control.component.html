@@ -1,0 +1,4 @@
+<nz-form-control [formGroup]="myForm">
+    <input nz-input type="text" (blur)="onTouch()" [disabled]="disable" formControlName="name">
+    <input nz-input type="text" (blur)="onTouch()" [disabled]="disable" formControlName="description">
+</nz-form-control>

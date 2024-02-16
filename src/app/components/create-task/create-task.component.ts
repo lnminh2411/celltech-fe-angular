@@ -177,11 +177,16 @@ export class CreateTaskComponent {
         //const formControl = this.formBuilder.control(null);
         this.getFieldStyle(column.componentText);
         this.form.addControl(column.componentText, formControl);
+        const formControl2 = this.formBuilder.control({});
+        this.form.addControl("data", formControl2);
         if (isHidden) {
           formControl.disable();
         }
       });
     });
+    this.form.valueChanges.subscribe(value => {
+      console.log(value)
+    })
   }
   getSettingField(componentText: string) {
     const settingFieldArray = Object.values<any>(this.fieldSetting);

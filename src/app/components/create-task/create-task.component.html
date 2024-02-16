@@ -7,78 +7,73 @@
         </button>
     </div>
     <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" nzLayout="vertical">
+        <app-component-control formControlName="data"></app-component-control>
         <div class="row" *ngFor="let row of createTaskForm.settings.formLayout; index as i" nz-row [nzGutter]="24">
             <div class="column" *ngFor="let column of row; let index = index" nz-col [nzSpan]="24/row.length">
+
                 <nz-form-item class="form" *ngIf="!isFieldShown(column.componentText)">
                     <nz-form-label [nzRequired]="isFieldRequire(column.componentText)" nzNoColon>
                         {{column.caption}}
                     </nz-form-label>
+
                     <nz-form-control nzErrorTip="Please input">
                         <ng-container class="input" [ngSwitch]="getElementType(column.componentText)">
-                            <celltech-datetime *ngSwitchCase="'DATE_TIME'" formControlName="{{column.componentText}}" 
-                                                [format]="getFormat(column.componentText)"
-                                                [defaultValue]="getDefaultValue(column.componentText)"
-                                                [ngStyle]="{
+                            <celltech-datetime *ngSwitchCase="'DATE_TIME'" formControlName="{{column.componentText}}"
+                                [format]="getFormat(column.componentText)"
+                                [defaultValue]="getDefaultValue(column.componentText)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-datetime>
                             <celltech-number *ngSwitchCase="'NUMBER'" formControlName="{{column.componentText}}"
-                                                [defaultValue]="getDefaultValue(column.componentText)"
-                                                [format]="getFormat(column.componentText)"
-                                                [ngStyle]="{
+                                [defaultValue]="getDefaultValue(column.componentText)"
+                                [format]="getFormat(column.componentText)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-number>
                             <celltech-rich-text *ngSwitchCase="'TEXT_AREA'" formControlName="{{column.componentText}}"
-                                                [id]="column.componentText"
-                                                [ngStyle]="{
+                                [id]="column.componentText" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-rich-text>
-                            <celltech-select *ngSwitchCase="'DROPDOWN'" formControlName="{{column.componentText}}" 
-                                                [values]="getValuesForComponent(column.componentText)" 
-                                                [displayField]="'value'" 
-                                                [valueField]="'id'"
-                                                [defaultValue]="getDefaultValue(column.componentText)"
-                                                (selected)="getItem($event)"
-                                                [ngStyle]="{
+                            <celltech-select *ngSwitchCase="'DROPDOWN'" formControlName="{{column.componentText}}"
+                                [values]="getValuesForComponent(column.componentText)" [displayField]="'value'"
+                                [valueField]="'id'" [defaultValue]="getDefaultValue(column.componentText)"
+                                (selected)="getItem($event)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-select>
                             <celltech-text *ngSwitchCase="'TEXT'" formControlName="{{column.componentText}}"
-                                                [defaultValue]="getDefaultValue(column.componentText)"
-                                                [ngStyle]="{
+                                [defaultValue]="getDefaultValue(column.componentText)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-text>
-                            <celltech-tree-select *ngSwitchCase="'TREE_DROPDOWN'" formControlName="{{column.componentText}}"
-                                                [nodes]="tree_data"
-                                                [defaultValue]="getDefaultValue(column.componentText)"
-                                                [ngStyle]="{
+                            <celltech-tree-select *ngSwitchCase="'TREE_DROPDOWN'"
+                                formControlName="{{column.componentText}}" [nodes]="tree_data"
+                                [defaultValue]="getDefaultValue(column.componentText)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-tree-select>
                             <celltech-upload-file *ngSwitchCase="'FILE'" formControlName="{{column.componentText}}"
-                                                [isMultipleFile]="isMultipleFile(column.componentText)"
-                                                [ngStyle]="{
+                                [isMultipleFile]="isMultipleFile(column.componentText)" [ngStyle]="{
                                                     'color': getFieldStyle(column.componentText).fontColor,
                                                     'font-size.px': getFieldStyle(column.componentText).fontSize,
                                                     'background-color': getFieldStyle(column.componentText).backgroundColor
                                                 }">
                             </celltech-upload-file>
                             <div *ngSwitchDefault>Unknown element type: {{ getElementType(column.componentText) }}</div>
+
                         </ng-container>
                     </nz-form-control>
                 </nz-form-item>

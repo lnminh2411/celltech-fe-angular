@@ -1,0 +1,4 @@
+<form nz-form [formGroup]="myForm" (ngSubmit)="onSubmit()" nzLayout="vertical">
+    <app-component-control formControlName="data"></app-component-control>
+    <button (click)="submit()">Save</button>
+</form>

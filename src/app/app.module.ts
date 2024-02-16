@@ -13,6 +13,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.component';
 import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
 import { ReferenceDropdownComponent } from './components/reference-dropdown/reference-dropdown.component';
+import { Bai1Component } from './components/bai1/bai1.component';
 
 @NgModule({
 
@@ -22,6 +23,7 @@ import { ReferenceDropdownComponent } from './components/reference-dropdown/refe
     DynamicInputComponent,
     DynamicTableComponent,
     ReferenceDropdownComponent,
+    Bai1Component,
   ],
   imports: [
     AntModule,

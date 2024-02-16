@@ -1,14 +1,36 @@
- <form [formGroup]="myForm">
-      <select formControlName="province" (change)="onProvinceChange($event)">
-        <option value="" disabled selected>Select Province</option>
-        <option *ngFor="let province of provinces | SortAlphabetPipe : displayField" [value]="province.code">{{ province.name }}</option>
-      </select>
-      <select formControlName="district" (change)="onDistrictChange($event)">
-        <option value="" disabled selected>Select District</option>
-        <option *ngFor="let district of filteredDistricts | SortAlphabetPipe : displayField" [value]="district.code">{{ district.name }}</option>
-      </select>
-      <select formControlName="ward">
-        <option value="" disabled selected>Select Ward</option>
-        <option *ngFor="let ward of filteredWards | SortAlphabetPipe : displayField" [value]="ward.code">{{ ward.name }}</option>
-      </select>
+<form [formGroup]="myForm">
+  <select formControlName="province" (change)="onProvinceChange($event)">
+    <option value="" disabled selected>Select Province</option>
+    <option *ngFor="let province of provinces | SortAlphabetPipe : displayField" [value]="province.code">{{
+      province.name }}</option>
+  </select>
+  <select formControlName="district" (change)="onDistrictChange($event)">
+    <option value="" disabled selected>Select District</option>
+    <option *ngFor="let district of filteredDistricts | SortAlphabetPipe : displayField" [value]="district.code">{{
+      district.name }}</option>
+  </select>
+  <select formControlName="ward">
+    <option value="" disabled selected>Select Ward</option>
+    <option *ngFor="let ward of filteredWards | SortAlphabetPipe : displayField" [value]="ward.code">{{ ward.name }}
+    </option>
+  </select>
 </form>
+<nz-table #expandTable [nzData]="treeList" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of expandTable.data">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.ID]">
+        <tr *ngIf="(item.PAREANT && item.PARENT.expand) || !item.PARENT">
+          <td [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.CHILDREN" [(nzExpand)]="item.expand"
+            (nzExpandChange)="collapse(mapOfExpandedData[data.ID], item, $event)">
+            {{ item.NAME }}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </tbody>
+</nz-table>

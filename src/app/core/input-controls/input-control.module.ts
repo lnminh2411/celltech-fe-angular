@@ -10,6 +10,7 @@ import { NumberComponent } from './text-control/number/number.component';
 import { DatetimeComponent } from './text-control/datetime/datetime.component';
 import { FileComponent } from './text-control/file/file.component';
 import { TreeSelectComponent } from './select-control/tree-select/tree-select.component';
+import { ComponentControlComponent } from './component-control/component-control.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TreeSelectComponent } from './select-control/tree-select/tree-select.co
     NumberComponent,
     DatetimeComponent,
     FileComponent,
-    TreeSelectComponent
+    TreeSelectComponent,
+    ComponentControlComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { TreeSelectComponent } from './select-control/tree-select/tree-select.co
     NumberComponent,
     DatetimeComponent,
     FileComponent,
-    TreeSelectComponent
+    TreeSelectComponent,
+    ComponentControlComponent
   ]
 })
 export class InputControlModule {

@@ -1,0 +1,19 @@
+{
+    "MenuType": "CONTAINER",
+    "DisplayPlace": null,
+    "InitParams": [],
+    "MapData": null,
+    "ContainerSettings": {
+        "Table": null,
+        "TableId": null,
+        "ComponentType": "LAYOUT",
+        "FilterId": null,
+        "ComponentItem": {
+            "Id": "256108c6-e86a-4418-b561-57d47e27759c",
+            "Name": null,
+            "Description": null,
+            "InitParams": []
+        }
+    },
+    "ActionSteps": null
+}

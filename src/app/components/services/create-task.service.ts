@@ -62,4 +62,28 @@ export class CreateTaskService {
   public getDataFromJson(jsonUrl: string): Observable<any> {
     return this.httpClient.get<any>(jsonUrl);
   }
+  public bai1(data: any) {
+    const componentItem: any = {}
+    componentItem.Id = this.generateGUID();
+    componentItem.Name = data.data.name;
+    componentItem.Description = data.data.description;
+    componentItem.InitParams = [];
+
+    const containerSettings: any = {}
+    containerSettings.Table = null;
+    containerSettings.TableId = null;
+    containerSettings.componentType = "LAYOUT";
+    containerSettings.FilterId = null;
+    containerSettings.ComponentItem = componentItem;
+
+    const returnData: any = {}
+    returnData.MenuType = "Container";
+    returnData.DisplayPlace = null;
+    returnData.InitParams = [];
+    returnData.MapData = null;
+    returnData.ContainerSettings = containerSettings;
+    returnData.ActionSteps = null;
+
+    return returnData;
+  }
 }
